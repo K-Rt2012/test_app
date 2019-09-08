@@ -18,8 +18,7 @@ page.xpath('//a').each do |node|
   name = node.inner_text
   linked_url = node[:href]
   #データをarrクラスに格納
-  arr << [name , linked_url]
-  puts arr
+  arr << [name, linked_url]
 end
 
 #csvファイル形式で生成
@@ -30,7 +29,11 @@ end
 #end
 #puts csv_format
 
-test = CSV.open("youtuber_list.csv", "w") do |test|
-  test << arr
-  puts test
+#csvファイルを開き、UTF－8で書き込むよう定義。
+#arrデータをcsvファイルに書き込み
+csv_format = CSV.open("youtuber_list.csv", "w:UTF-8") do |test|
+    arr.each do |data|
+    test << data
+    puts csv_format
+  end
 end

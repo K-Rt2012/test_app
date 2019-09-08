@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'csv'
+
+CSV.foreach('youtuber_list.csv') do |data|
+  List.create(name: data[0], url: data[1])
+end
