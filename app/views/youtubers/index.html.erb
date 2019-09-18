@@ -1,0 +1,4 @@
+<h1>Youtuber一覧</h1>
+  <% @list.each do |data| %>
+    <br><%= link_to "#{data.name}", "/youtubers/#{data.id}" %>
+  <% end %>

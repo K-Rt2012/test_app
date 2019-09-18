@@ -9,9 +9,9 @@ require 'csv'
 arr = Array.new
 #CSVファイルの値を1行ずつ読み込み
 CSV.foreach('youtuber_list.csv') do |data|
-    name = data[0]
     url = data[1]
     charset = nil
+    #begin-rescue　例外処理を行い、エラー内容をeに格納する
     begin
       html = open(url) do |f|
         charset = f.charset
@@ -27,16 +27,22 @@ CSV.foreach('youtuber_list.csv') do |data|
     linked_url = node[:href]
     if /\Ahttps:\/\/www.youtube.com\/channel/ === linked_url
       channel_id = linked_url.gsub(/\Ahttps:\/\/www.youtube.com\/channel\/((\w|-)*)\/*.*/, '\1')
-    elsif /\Ahttps:\/\/www.youtube.com\/user/ === linked_url
-      channel_id = linked_url.gsub(/\Ahttps:\/\/www.youtube.com\/user\/((\w|-)*)\/*.*/, '\1')
+      name = node.inner_text
+      channel_ids << [name,channel_id]
     end
-    if channel_id != nil
-      channel_ids << channel_id
-    end
+    #if channel_id != nil
+      #channel_ids << [name,channel_id]
+    #end
+    #if name != nil
+      #names << name
+    #end
+    channel_ids.delete("")
   end
-  arr << name
-  arr << channel_ids
+  #joinでchannnel_idsのデータを文字列にする(csvファイルには文字列でないと書き込めないため)
+  arr << channel_ids.join(',')
+    p arr
 end
+#csvファイルを開き、UTF－8で変数arrのデータを書き込み
 csv_format = CSV.open("youtuber_list_data.csv", "w:UTF-8") do |test|
   arr.each do |youtuber_data|
     test << youtuber_data

@@ -62,5 +62,7 @@ gem 'jquery-rails'
 
 gem "bootswatch", github: "thomaspark/bootswatch"
 
+gem 'httpclient'
+
 
 

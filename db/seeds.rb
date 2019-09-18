@@ -7,6 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'csv'
 
-CSV.foreach(Rails.root.join('config/youtuber_list/youtuber_list.csv')) do |data|
+CSV.foreach(Rails.root.join('config/youtuber_list/youtuber_list_data.csv')) do |data|
   List.create(name: data[0], url: data[1])
 end

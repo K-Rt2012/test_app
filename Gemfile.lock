@@ -92,6 +92,7 @@ GEM
     ffi (1.11.1-x64-mingw32)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -218,6 +219,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   duktape
+  httpclient
   jbuilder (~> 2.5)
   jquery-rails
   puma (~> 3.11)
