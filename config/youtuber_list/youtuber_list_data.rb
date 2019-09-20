@@ -6,7 +6,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'csv'
 
-arr = Array.new
+channels = Array.new
+users = Array.new
 #CSVファイルの値を1行ずつ読み込み
 CSV.foreach('youtuber_list.csv') do |data|
     url = data[1]
@@ -21,33 +22,48 @@ CSV.foreach('youtuber_list.csv') do |data|
     end
     page = Nokogiri::HTML.parse(html,nil,charset)
     channel_ids = Array.new
+    user_ids = Array.new
   #xpathでnodeを指定
   page.xpath('//*[@id="entry"]/section/table//a').each do |node|
     #nodeのhref属性を取得
     linked_url = node[:href]
     if /\Ahttps:\/\/www.youtube.com\/channel/ === linked_url
-      channel_id = linked_url.gsub(/\Ahttps:\/\/www.youtube.com\/channel\/((\w|-)*)\/*.*/, '\1')
       name = node.inner_text
-      channel_ids << [name,channel_id]
+      channel_id = linked_url.gsub(/\Ahttps:\/\/www.youtube.com\/channel\/((\w|-)*)\/*.*/, '\1')
+      channel_ids << name
+      channel_ids << channel_id.to_s
+    elsif /\Ahttps:\/\/www.youtube.com\/user/ === linked_url
+      name = node.inner_text
+      user_id = linked_url.gsub(/\Ahttps:\/\/www.youtube.com\/user\/((\w|-)*)\/*.*/, '\1')
+      user_ids << name
+      user_ids << user_id
     end
-    #if channel_id != nil
-      #channel_ids << [name,channel_id]
-    #end
-    #if name != nil
-      #names << name
-    #end
-    channel_ids.delete("")
   end
   #joinでchannnel_idsのデータを文字列にする(csvファイルには文字列でないと書き込めないため)
-  arr << channel_ids.join(',')
-    p arr
+  channels << channel_ids
+  users << user_ids
+  #dekete_ifで[]の配列を除去
+  channels.delete_if {|data|
+    data == []
+  }
+  users.delete_if {|data|
+    data == []
+  }
 end
-#csvファイルを開き、UTF－8で変数arrのデータを書き込み
-csv_format = CSV.open("youtuber_list_data.csv", "w:UTF-8") do |test|
-  arr.each do |youtuber_data|
+#csvファイルを開き、UTF－8で変数channelsのデータを書き込み
+csv_format = CSV.open("youtuber_users_data.csv", "w:UTF-8") do |test|
+  users.each do |youtuber_data|
     test << youtuber_data
     puts csv_format
   end
 end
+#csvファイルを開き、UTF－8で変数usersのデータを書き込み
+csv_format = CSV.open("youtuber_channels_data.csv", "w:UTF-8") do |test|
+  channels.each do |youtuber_data|
+    test << youtuber_data
+    puts csv_format
+  end
+end
+
 
 

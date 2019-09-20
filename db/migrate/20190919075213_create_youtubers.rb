@@ -1,6 +1,6 @@
-class CreateLists < ActiveRecord::Migration[5.2]
+class CreateYoutubers < ActiveRecord::Migration[5.2]
   def change
-    create_table :lists do |t|
+    create_table :youtubers do |t|
       t.string :name
       t.text :url
 

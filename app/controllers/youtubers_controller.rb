@@ -1,17 +1,26 @@
 class YoutubersController < ApplicationController
+  #http
+  require 'httpclient'
 
   def index
-    @list = List.all
+    @youtubers = Youtuber.all
   end
 
   def show
-    @list = List.find_by(id: params[:id])
-    #url_id = @list.url.split(",")
-    require 'httpclient'
-    @channel_id = "https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCWdFb_w3JI1BPTiBCXERg2Q&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
+    @youtuber = Youtuber.find_by(id: params[:id])
+    @api_id = "https://www.googleapis.com/youtube/v3/playlists?part=id&channelId=#{@youtuber.url}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
     client = HTTPClient.new()
-    @response = client.get(@channel_id)
-    puts @response.body
+    response_playlist = client.get(@api_id)
+    response_str = response_playlist.body
+    @response_hash = JSON.parse(response_str)
+    #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
+    @playlist_id = @response_hash["items"][0]["id"]
+    api_video_id = "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=#{@playlist_id}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
+    response_video = client.get(api_video_id)
+    response_video_str = response_video.body
+    #JSON.parseとは、JSON(ジェイソン)形式の文字列をRubyのHash(ハッシュ)形式に変換するためのメソッド
+    @response_video_hash = JSON.parse(response_video_str)
+    #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
+    @video_id = @response_video_hash["items"][0]["contentDetails"]["videoId"]
   end
-
 end

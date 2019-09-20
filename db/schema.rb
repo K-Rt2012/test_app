@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_08_065811) do
+ActiveRecord::Schema.define(version: 2019_09_19_075213) do
 
   create_table "lists", force: :cascade do |t|
+    t.string "name"
+    t.text "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "youtubers", force: :cascade do |t|
     t.string "name"
     t.text "url"
     t.datetime "created_at", null: false
