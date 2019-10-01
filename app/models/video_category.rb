@@ -1,0 +1,3 @@
+class VideoCategory < ApplicationRecord
+
+end

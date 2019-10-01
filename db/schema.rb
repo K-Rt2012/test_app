@@ -10,13 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_075213) do
+ActiveRecord::Schema.define(version: 2019_10_01_060348) do
 
-  create_table "lists", force: :cascade do |t|
-    t.string "name"
-    t.text "url"
+  create_table "likes", force: :cascade do |t|
+    t.integer "youtuber_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "video_categories", force: :cascade do |t|
+    t.integer "category"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.string "video_id"
+    t.integer "video_category_id"
+    t.integer "youtuber_id"
+    t.string "video_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["video_category_id"], name: "index_videos_on_video_category_id"
+    t.index ["youtuber_id"], name: "index_videos_on_youtuber_id"
   end
 
   create_table "youtubers", force: :cascade do |t|

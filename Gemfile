@@ -64,5 +64,6 @@ gem "bootswatch", github: "thomaspark/bootswatch"
 
 gem 'httpclient'
 
+gem 'devise'
 
 

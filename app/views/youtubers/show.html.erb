@@ -1,5 +1,23 @@
 <h3><%= "#{@youtuber.name}のプロフィール" %></h3>
-<%=link_to @youtuber.name, @api_id %>
-<br><iframe width="560" height="315" src="https://www.youtube.com/embed/#{@video_id}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dJkCO74eZvc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<%= @video_id %>
+<%=link_to @youtuber.name, 'https://www.youtube.com/channel/' + @youtuber.url %>
+<br><iframe width="560" height="315" src="<%= 'https://www.youtube.com/embed/' + @video.video_id %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<%= @category.name %>
+<% if current_user %>
+  <% if current_user.already_liked?(@youtuber) %>
+    <%= form_tag("/likes/#{@youtuber.id}", method: :delete) do %>
+      <%= hidden_field_tag :id, @youtuber.id %>
+      <button type= submit>
+        <i class="fas fa-thumbs-up nogood_color faa-pulse animate animated-hover fa-2x"></i>
+      </button>
+      <%= "グッド数：#{@good_count}" %>
+    <% end %>
+    <% else %>
+    <%= form_tag("/likes", method:"post") do %>
+      <%= hidden_field_tag :id, @youtuber.id %>
+        <button type = submit>
+          <i class="fas fa-thumbs-up good_color faa-pulse animate animated-hover fa-2x"></i>
+        </button>
+        <%= "グッド数：#{@good_count}" %>
+    <% end %>
+  <% end %>
+<% end %>
