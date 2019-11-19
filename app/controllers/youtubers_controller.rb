@@ -4,6 +4,7 @@ class YoutubersController < ApplicationController
 
   def index
     @youtubers = Youtuber.all
+    @category_id = VideoCategory.all
   end
 
   def show
@@ -12,5 +13,20 @@ class YoutubersController < ApplicationController
     @category = VideoCategory.find_by(category: @video.video_category_id)
     #youtuberのいいね数をカウント
     @good_count = Like.where(youtuber_id: @youtuber.id).count
+  end
+
+  def category
+    @category_id = VideoCategory.find_by(category: params[:category])
+    @category = Video.where(video_category_id: @category_id.category)
+    #@video_category = VideoCategory.find_by(category: @category.video_category_id)
+  end
+
+  def category_search
+    @category = Video.find_by(video_category_id: params[:category])
+  end
+
+  def subscriber_ranking
+    @subscriber = Rank.all
+    @youtuber = Youtuber.find_by(channel_id: @subscriber.channel_id)
   end
 end

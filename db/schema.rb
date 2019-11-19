@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_01_060348) do
+ActiveRecord::Schema.define(version: 2019_11_12_050646) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "youtuber_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+  end
+
+  create_table "ranks", force: :cascade do |t|
+    t.string "name"
+    t.string "channel_id"
+    t.string "number_of_registrant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,7 +60,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_060348) do
 
   create_table "youtubers", force: :cascade do |t|
     t.string "name"
-    t.text "url"
+    t.text "channel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

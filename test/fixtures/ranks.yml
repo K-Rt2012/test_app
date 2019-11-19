@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  channel_id: MyString
+  number_of_registrant: MyString
+
+two:
+  name: MyString
+  channel_id: MyString
+  number_of_registrant: MyString

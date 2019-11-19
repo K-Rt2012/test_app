@@ -66,4 +66,6 @@ gem 'httpclient'
 
 gem 'devise'
 
+source 'https://rubygems.org'
+gem 'poltergeist'
 
