@@ -27,7 +27,7 @@ CSV.foreach(Rails.root.join('config', 'youtuber_list', 'video_data.csv')) do |vi
     next if index > 100
     p index
     p youtuber_data[2]
-    p youtuber_data[0]
+    p video_data[0]
     #youtuberstableに登録されているデータを弾く処理
     unless Youtuber.exists?(channel_id: youtuber_data[2])
       #配列の要素を数える
@@ -48,9 +48,8 @@ CSV.foreach(Rails.root.join('config', 'youtuber_list', 'video_data.csv')) do |vi
       youtuber_data[1].to_i
       p youtuber_data[1]
       youtuber = Youtuber.create(name: youtuber_data[0], number_of_registrant: youtuber_data[1], channel_id: youtuber_data[2], genle: a)
-        category = VideoCategory.find_by(category: video_data[2])
-        Video.create(video_id: video_data[0], video_title: video_data[1], youtuber_id: youtuber.id, video_category_id: category.category)
-      end
+      category = VideoCategory.find_by(category: video_data[2])
+      Video.create(video_id: video_data[0], video_title: video_data[1], youtuber_id: youtuber.id, video_category_id: category.category)
     end
   end
 end

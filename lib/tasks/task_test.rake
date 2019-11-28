@@ -13,7 +13,8 @@ namespace :task_test do
     require 'active_support/core_ext/numeric/conversions'
 
     videos_data = Array.new
-    CSV.foreach(Rails.root.join('config','youtuber_list','youtuber_next_data.csv'))with_index(1) do |data,index|
+    CSV.foreach(Rails.root.join('config','youtuber_list','youtuber_next_data.csv')).
+    with_index(1) do |data,index|
       next if index > 95
       unless Youtuber.exists?(channel_id: data[2])
         p data[2]
