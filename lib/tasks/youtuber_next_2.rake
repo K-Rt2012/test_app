@@ -34,41 +34,43 @@ namespace :youtuber_next_2 do
       youtuber_data = Array.new
       #チャンネル名を抽出
       youtuber_name = page.xpath("//*[@class='youtuber_single_head']/div/h1").inner_text
-      #チャンネル名が空なら処理を終了
-      if youtuber_name != ""
-        youtuber_name = youtuber_name.gsub(/\s/, "")
+      youtuber_name = youtuber_name.gsub(/\s/, "")
+      #登録者数を抽出
+      subscriber = page.xpath("//*[@class='youtuber_single_head']/div/p[1]").inner_text
+      subscriber = subscriber.gsub(/チャンネル登録者数|\n|\s|人|,/, "")
+      #channel_idを抽出
+      channel_id = page.xpath("//*[@class='youtuber_single_head']/div/p[2]").inner_text
+      channel_id.match(/https:\/\/www.youtube.com\/channel\/((\w|-|_)*)/) do |id|
+        channel_id = id[1]
+      end
+      #チャンネル名又は登録者数が空なら処理を終了
+      if youtuber_name == ""
+        p "処理を終了します"
+      else
         p youtuber_name
         youtuber_data << youtuber_name
-        #登録者数を抽出
-        subscriber = page.xpath("//*[@class='youtuber_single_head']/div/p[1]").inner_text
-        subscriber = subscriber.gsub(/チャンネル登録者数|\n|\s/, "")
         p subscriber
         youtuber_data << subscriber
-        #channel_idを抽出
-        channel_id = page.xpath("//*[@class='youtuber_single_head']/div/p[2]").inner_text
-        channel_id.match(/https:\/\/www.youtube.com\/channel\/((\w|-|_)*)/) do |id|
-          channel_id = id[1]
-        end
         p channel_id
         youtuber_data << channel_id
         #ジャンルを抽出
-        #genres = Array.new
         page.xpath("/html/body/main/div/section[1]/div[3]/div/div[3]/a").each do |genre|
-          #genres << genre.inner_text
           youtuber_data << genre.inner_text
         end
-        #p genres
         youtubers_data << youtuber_data
-      else
-        p "処理を終了します"
-        break
       end
     end
     #csvファイルを開き、UTF－8で変数youtubers_dataの値を書き込み
     csv_format = CSV.open(Rails.root.join('config', 'youtuber_list', 'youtuber_next_data.csv'), "w:UTF-8") do |test|
       youtubers_data.each do |data|
         test << data
-        puts csv_format
+      end
+    end
+    #ranktableに値を格納
+    youtubers_data.each do |data|
+      unless Youtuber.exists?(channel_id: data[2])
+        data[1].to_i
+        rank = Youtuber.create(name: data[0], number_of_registrant: data[1], channel_id: data[2], genle: data[3..last])
       end
     end
   end

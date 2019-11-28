@@ -22,33 +22,35 @@ require 'httpclient'
   # p VideoCategory.create(category: 26, name: "ハウツーとスタイル")
   # p VideoCategory.create(category: 27, name: "教育")
   # p VideoCategory.create(category: 28, name: "科学と技術")
-
-CSV.foreach(Rails.root.join('config', 'youtuber_list', 'youtuber_channels_data.csv')).with_index(1) do |data,index|
-  next if index > 25
-  p index
-  #youtuberstableに登録されているデータを弾く処理
-  p data[1]
-  p data[0]
-  unless Youtuber.exists?(channel_id: data[1])
-    youtuber = Youtuber.create(name: data[0], channel_id: data[1])
-    api_id = "https://www.googleapis.com/youtube/v3/search?part=id,snippet&channelId=#{youtuber.channel_id}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
-    client = HTTPClient.new()
-    response_playlist = client.get(api_id)
-    response_str = response_playlist.body
-    response_hash = JSON.parse(response_str)
-    #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
-    video_id = response_hash['items'][0]['id']['videoId']
-    p video_id
-    video_title = response_hash["items"][0]["snippet"]["title"]
-    p video_title
-    api_category_id = "https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=#{video_id}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
-    response_category = client.get(api_category_id)
-    response_category_str = response_category.body
-    response_category_hash = JSON.parse(response_category_str)
-    #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
-    category_id = response_category_hash["items"][0]["snippet"]["categoryId"]
-    p category_id
-    category = VideoCategory.find_by(category: category_id)
-    Video.create(video_id: video_id, video_title: video_title, youtuber_id: youtuber.id, video_category_id: category.category)
+CSV.foreach(Rails.root.join('config', 'youtuber_list', 'video_data.csv')) do |video_data|
+  CSV.foreach(Rails.root.join('config', 'youtuber_list', 'youtuber_next_data.csv')).with_index(1) do |youtuber_data,index|
+    next if index > 100
+    p index
+    p youtuber_data[2]
+    p youtuber_data[0]
+    #youtuberstableに登録されているデータを弾く処理
+    unless Youtuber.exists?(channel_id: youtuber_data[2])
+      #配列の要素を数える
+      number = youtuber_data.count
+      p number
+      a = youtuber_data[3]
+      genles = Array.new
+      if youtuber_number >= 4
+        number = 4..number
+        number.each do |g|
+          p youtuber_data[g]
+          genles << youtuber_data[g]
+        end
+        a = genles.join(", ")
+      end
+      p a
+      youtuber_data[1].gsub!(/,|人/, "")
+      youtuber_data[1].to_i
+      p youtuber_data[1]
+      youtuber = Youtuber.create(name: youtuber_data[0], number_of_registrant: youtuber_data[1], channel_id: youtuber_data[2], genle: a)
+        category = VideoCategory.find_by(category: video_data[2])
+        Video.create(video_id: video_data[0], video_title: video_data[1], youtuber_id: youtuber.id, video_category_id: category.category)
+      end
+    end
   end
 end

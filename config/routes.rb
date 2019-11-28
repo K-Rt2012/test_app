@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new]
   get 'youtubers/category' => 'youtubers#category'
   get 'youtubers/subscriber_ranking' => 'youtubers#subscriber_ranking'
+  get 'youtubers/home' => 'youtubers#home'
   resources :youtubers, only: [:index, :show]
   post 'youtubers/category_search' => 'yuoubers#category_search'
   resources :likes, only: [:create, :destroy]

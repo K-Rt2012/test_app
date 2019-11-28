@@ -1,5 +1,5 @@
 <h3><%= "#{@youtuber.name}のプロフィール" %></h3>
-<%=link_to @youtuber.name, 'https://www.youtube.com/channel/' + @youtuber.url %>
+<%=link_to @youtuber.name, 'https://www.youtube.com/channel/' + @youtuber.channel_id %>
 <br><iframe width="560" height="315" src="<%= 'https://www.youtube.com/embed/' + @video.video_id %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <%= @category.name %>
 <% if current_user %>

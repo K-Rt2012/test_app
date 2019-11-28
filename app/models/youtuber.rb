@@ -10,3 +10,11 @@ class Youtuber < ApplicationRecord
     likes.find_by(user_id: user.id).destroy
   end
 end
+
+def self.search(search) #self.でクラスメソッドとしている
+  if search # Controllerから渡されたパラメータが!= nilの場合は、titleカラムを部分一致検索
+    Youtuber.where(['name LIKE ?', "%#{search}%"])
+  else
+    Youtuber.all
+  end
+end

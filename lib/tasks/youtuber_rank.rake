@@ -1,6 +1,6 @@
-namespace :task_sample do
+namespace :youtuber_rank do
   desc "task_sample_use_model"
-  task :task_model => :environment do
+  task :task_youtuber_rank => :environment do
     require 'csv'
     Encoding.default_external = 'utf-8'
     #Nokogiriライブラリの読み込み
@@ -13,13 +13,13 @@ namespace :task_sample do
     require 'active_support/core_ext/numeric/conversions'
     number_of_registrants = Array.new
     #CSVファイルの値を1行ずつ読み込み
-    CSV.foreach(Rails.root.join('config','youtuber_list','youtuber_channels_data.csv')) do |data|
-      url = data[1]
-      p url
+    CSV.foreach(Rails.root.join('config','youtuber_list','youtuber_next_data.csv')) do |data|
+      channel_id = data[2]
+      p channel_id
       charset = nil
       #begin-rescue　例外処理を行い、エラー内容をeに格納する
       begin
-        html = open("https://www.youtube.com/channel/#{url}") do |f|
+        html = open("https://www.youtube.com/channel/#{channel_id}") do |f|
           charset = f.charset
           f.read
         end
@@ -48,9 +48,9 @@ namespace :task_sample do
         else
           #整数
           number_of_registrant = subscriber.to_i
-        end
-        p number_of_registrant
-        number_of_registrants << [ number_of_registrant, channel_name, url]
+      end
+      p number_of_registrant
+      number_of_registrants << [ number_of_registrant, channel_name, channel_id]
     end
     #チャンネルが存在しない場合、要素を除去
     number_of_registrants.delete_if {|data| data[1] == ""}

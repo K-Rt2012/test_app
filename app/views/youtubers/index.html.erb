@@ -1,6 +1,14 @@
 <h1>Youtuber一覧</h1>
+<%= form_tag ('/youtubers/'), method: :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "検索", :name => nil %>
+  </p>
+<% end %>
   <% @youtubers.each do |data| %>
     <br><%= link_to "#{data.name}", "/youtubers/#{data.id}" %>
+    <br><%= data.number_of_registrant %>
+    <br><%= data.genle %>
   <% end %>
 <%= form_tag ('/youtubers/category'), method: :get do %>
   <select name="category" >

@@ -5,6 +5,8 @@ class YoutubersController < ApplicationController
   def index
     @youtubers = Youtuber.all
     @category_id = VideoCategory.all
+    # パラメータをmodels/youtuber.rbのモデルに渡す
+    @youtuber_search = Youtuber.search(params[:search])
   end
 
   def show
@@ -26,7 +28,7 @@ class YoutubersController < ApplicationController
   end
 
   def subscriber_ranking
-    @subscriber = Rank.all
+    @subscriber = Youtuber.all
     @youtuber = Youtuber.find_by(channel_id: @subscriber.channel_id)
   end
 end
