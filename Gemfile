@@ -69,3 +69,4 @@ gem 'devise'
 source 'https://rubygems.org'
 gem 'poltergeist'
 
+gem 'rails4-autocomplete'

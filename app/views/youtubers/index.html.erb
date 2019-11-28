@@ -1,9 +1,6 @@
 <h1>Youtuber一覧</h1>
 <%= form_tag ('/youtubers/'), method: :get do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "検索", :name => nil %>
-  </p>
+    <%= autocomplete_field_tag 'youtuber[name]', nil,  autocomplete_youtuber_name_youtubers_path %>
 <% end %>
   <% @youtubers.each do |data| %>
     <br><%= link_to "#{data.name}", "/youtubers/#{data.id}" %>

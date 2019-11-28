@@ -6,7 +6,14 @@ class YoutubersController < ApplicationController
     @youtubers = Youtuber.all
     @category_id = VideoCategory.all
     # パラメータをmodels/youtuber.rbのモデルに渡す
-    @youtuber_search = Youtuber.search(params[:search])
+    #@youtuber_search = Youtuber.search(params[:search])
+      # 検索クエリ: params[:user][:name]
+    if params[:youtuber] && params[:youtuber][:name]
+      user_name = params[:youtuber][:name]
+      @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'")
+    else
+      @youtuber_search = Youtuber.all
+    end
   end
 
   def show
