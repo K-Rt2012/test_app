@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'youtubers/category' => 'youtubers#category'
   get 'youtubers/subscriber_ranking' => 'youtubers#subscriber_ranking'
   get 'youtubers/home' => 'youtubers#home'
+  post 'youtubers/search' => 'youtubers#search'
   #autocomplete
   resources :youtubers do
     get :autocomplete_youtuber_name, on: :collection # 追加

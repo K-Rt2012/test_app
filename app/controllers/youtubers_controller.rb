@@ -9,7 +9,7 @@ class YoutubersController < ApplicationController
     #@youtuber_search = Youtuber.search(params[:search])
       # 検索クエリ: params[:user][:name]
     if params[:youtuber] && params[:youtuber][:name]
-      user_name = params[:youtuber][:name]
+      youtuber_name = params[:youtuber][:name]
       @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'")
     else
       @youtuber_search = Youtuber.all
@@ -37,5 +37,13 @@ class YoutubersController < ApplicationController
   def subscriber_ranking
     @subscriber = Youtuber.all
     @youtuber = Youtuber.find_by(channel_id: @subscriber.channel_id)
+  end
+  def search
+    @search = Youtuber.find_by(name: params[:name])
+    if @search
+      redirect_to "/youtubers/#{@search.id}"
+    else
+      redirect_to "/youtubers/"
+    end
   end
 end

@@ -35,8 +35,8 @@ CSV.foreach(Rails.root.join('config', 'youtuber_list', 'video_data.csv')) do |vi
       p number
       a = youtuber_data[3]
       genles = Array.new
-      if youtuber_number >= 4
-        number = 4..number
+      if number >= 3
+        number = 3..number
         number.each do |g|
           p youtuber_data[g]
           genles << youtuber_data[g]
