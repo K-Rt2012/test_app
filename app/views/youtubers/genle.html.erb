@@ -1,0 +1,8 @@
+<h1><%= @genle_search %></h1>
+<% @genle_search.each do |data| %>
+  <br><%= link_to "#{data.name}", "/youtubers/#{data.id}" %>
+  <br><%= data.number_of_registrant %>
+  <% data.genles.each do |genle| %>
+    <br><%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name) %>
+  <% end %>
+<% end %>

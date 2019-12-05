@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_173449) do
+ActiveRecord::Schema.define(version: 2019_12_01_114406) do
+
+  create_table "genles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genles_youtubers", id: false, force: :cascade do |t|
+    t.integer "genle_id"
+    t.integer "youtuber_id"
+    t.index ["genle_id"], name: "index_genles_youtubers_on_genle_id"
+    t.index ["youtuber_id"], name: "index_genles_youtubers_on_youtuber_id"
+  end
 
   create_table "likes", force: :cascade do |t|
     t.integer "youtuber_id"

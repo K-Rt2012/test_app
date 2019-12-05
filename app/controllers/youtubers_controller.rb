@@ -5,20 +5,21 @@ class YoutubersController < ApplicationController
   def index
     @youtubers = Youtuber.all
     @category_id = VideoCategory.all
-    # パラメータをmodels/youtuber.rbのモデルに渡す
-    #@youtuber_search = Youtuber.search(params[:search])
-      # 検索クエリ: params[:user][:name]
-    if params[:youtuber] && params[:youtuber][:name]
-      youtuber_name = params[:youtuber][:name]
+    #@genle = Youtuber.includes(:genles).where('groups.id' => genle.id)
+    if params[:youtuber_name]
+      youtuber_name = params[:youtuber_name]
+      # where likeであいまい検索
       @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'")
     else
-      @youtuber_search = Youtuber.all
+      @youtuber_search = Youtuber.first(50)
     end
   end
 
   def show
     @youtuber = Youtuber.find_by(id: params[:id])
+    p @youtuber
     @video = Video.find_by(youtuber_id: @youtuber.id)
+    p @video
     @category = VideoCategory.find_by(category: @video.video_category_id)
     #youtuberのいいね数をカウント
     @good_count = Like.where(youtuber_id: @youtuber.id).count
@@ -38,12 +39,12 @@ class YoutubersController < ApplicationController
     @subscriber = Youtuber.all
     @youtuber = Youtuber.find_by(channel_id: @subscriber.channel_id)
   end
-  def search
-    @search = Youtuber.find_by(name: params[:name])
-    if @search
-      redirect_to "/youtubers/#{@search.id}"
-    else
-      redirect_to "/youtubers/"
-    end
-  end
+end
+def genle
+  @genle_name = params[:genle_name]
+  p @genle_name
+  genle = Genle.find_by(name: params[:genle_name])
+  p genle
+  @genle_search = Youtuber.includes(:genles).where('genles.id' => genle.id)
+  p @genle_search
 end

@@ -1,20 +1,35 @@
-<h1>Youtuber一覧</h1>
-<%= form_tag(youtubers_path, method: :get, enforce_utf8: false) do %>
-  <%= autocomplete_field_tag 'youtuber[name]', nil,  autocomplete_youtuber_name_youtubers_path %>
-  <input type="submit" value="検索">
-<% end %>
-  <% @youtubers.each do |data| %>
-    <br><%= link_to "#{data.name}", "/youtubers/#{data.id}" %>
-    <br><%= data.number_of_registrant %>
-    <br><%= data.genle %>
+<div class="site_column">
+  <h1>Youtuber検索</h1>
+  <%= form_tag(youtubers_path, method: :get, enforce_utf8: false) do %>
+    <%= autocomplete_field_tag :youtuber_name, nil,  autocomplete_youtuber_name_youtubers_path %>
+    <input type="submit" value="検索">
   <% end %>
-<%= form_tag ('/youtubers/category'), method: :get do %>
-  <select name="category" >
-    <optgroup label="カテゴリーリスト">
-      <% @category_id.each do |category_id| %>
-        <option value=<%= category_id.category %> ><%= category_id.name %></option>
-      <% end %>
-    </optgroup>
-  </select>
-  <input type="submit" value="検索">
-<% end %>
+  <%= form_tag ('/youtubers/category'), method: :get do %>
+    <select name="category" >
+      <optgroup label="カテゴリーリスト">
+        <% @category_id.each do |category_id| %>
+          <option value=<%= category_id.category %> ><%= category_id.name %></option>
+        <% end %>
+      </optgroup>
+    </select>
+    <input type="submit" value="検索">
+  <% end %>
+
+  <div>
+    <h5>ジャンルから探す</h5>
+  </div>
+  <div class="youtuber_column">
+    <% @youtuber_search.each do |data| %>
+      <div class="youtuber_container">
+        <div class="youtuber_information">
+          <h5 class="youtuber_name"><%= link_to "#{data.name}", "/youtubers/#{data.id}" %></h5>
+          <span class="youtuber_subscriber"><%= "チャンネル登録者数： #{data.number_of_registrant}人" %></span>
+        </div>
+        <b>ジャンル：</b>
+        <% data.genles.each do |genle| %>
+          <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

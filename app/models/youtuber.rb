@@ -1,6 +1,8 @@
 class Youtuber < ApplicationRecord
   #dependent: :destroyはもしYoutuberがデータベースから削除されてしまった場合にYoutuberへのグッドも全て消えるようになる
   has_many :likes, dependent: :destroy
+  # youtuberモデルは複数のジャンルを所有している（多対多の関係）
+  has_and_belongs_to_many :genles
   #likesテーブルを中間テーブルとして経由してuserテーブルから情報を取ってくると言うことを表してます。
   has_many :liked_youtubers, through: :likes, source: :user
   def iine(user)

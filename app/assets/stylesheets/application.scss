@@ -16,7 +16,9 @@
 @import "bootstrap";
 @import "united/bootswatch";
 @import "*";
-
+html{
+  font-size: 16px;
+}
 body{
   background-color: #EEEEEE;
   font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;;
@@ -26,7 +28,7 @@ ul.topnav {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
-	background-color: #000033;
+	background-color: #222222;
 }
 ul.topnav li {
 	float: left;
@@ -62,12 +64,51 @@ ul.topnav li.right {
   letter-spacing: 1px;
   line-height: 30px;
 }
+.site_column{
+  width: 90%;
+  max-width: 1040px;
+  margin: auto;
+}
 footer{
   /*footerの装飾*/
   width: 100%;
-  background-color: #000033;
+  background-color: #222222;
   color: #fff;
   text-align: center;
   padding: 30px 0;
   bottom: 0; /*下に固定*/
+}
+.youtuber_column{
+  width:400px;
+  min-height:500px;
+  height:auto ;
+  float:right;
+  margin-top:10px;
+}
+.youtuber_container{
+  padding: 10px  13px;
+  background-color: #fff;
+  margin: 10px 0px;
+}
+.youtuber_infomation{
+  margin-bottom: 10px;
+}
+.youtuber_name{
+  text-decoration: none;
+  font-weight: bold
+}
+.youtuber_subscriber{
+
+}
+.youtuber_genle{
+  padding: 3px 5px;
+  background-color: rgb(151, 151, 151);
+  color: #EEEEEE;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 6px;
+  display: inline-block;
+}
+.genle_hover:hover{
+  background-color: #f37579;
 }
