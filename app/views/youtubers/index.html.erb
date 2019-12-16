@@ -1,35 +1,63 @@
-<div class="site_column">
-  <h1>Youtuber検索</h1>
-  <%= form_tag(youtubers_path, method: :get, enforce_utf8: false) do %>
-    <%= autocomplete_field_tag :youtuber_name, nil,  autocomplete_youtuber_name_youtubers_path %>
-    <input type="submit" value="検索">
-  <% end %>
-  <%= form_tag ('/youtubers/category'), method: :get do %>
-    <select name="category" >
-      <optgroup label="カテゴリーリスト">
-        <% @category_id.each do |category_id| %>
-          <option value=<%= category_id.category %> ><%= category_id.name %></option>
-        <% end %>
-      </optgroup>
-    </select>
-    <input type="submit" value="検索">
-  <% end %>
-
-  <div>
-    <h5>ジャンルから探す</h5>
-  </div>
-  <div class="youtuber_column">
-    <% @youtuber_search.each do |data| %>
-      <div class="youtuber_container">
-        <div class="youtuber_information">
-          <h5 class="youtuber_name"><%= link_to "#{data.name}", "/youtubers/#{data.id}" %></h5>
-          <span class="youtuber_subscriber"><%= "チャンネル登録者数： #{data.number_of_registrant}人" %></span>
+<main class="main">
+  <div class="inner">
+    <section class="main_column">
+      <div class="search_container">
+        <div class="top_space">
         </div>
-        <b>ジャンル：</b>
-        <% data.genles.each do |genle| %>
-          <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
+        <h1 class="search_title">Youtuber検索</h1>
+        <div class="search_foram">
+          <%= form_tag(youtubers_name_search_path, method: :get, enforce_utf8: false, class: "name_search_form") do %>
+            <%= autocomplete_field_tag :youtuber_name, nil,  autocomplete_youtuber_name_youtubers_path, class: "name_search", placeholder: "キーワードで検索", type: "text" %>
+            <button type="submit" class="button1"><i class="fas fa-search"></i></button>
+          <% end %>
+        </div>
+        <div class="index_genle_search_column">
+          <h5 class="index_genle_">ジャンルから探す</h5>
+          <% @genle_category.each do |genle_category| %>
+            <div class="index_genle_group">
+              <div class="index_genle_title">
+                <%= genle_category.name %>
+              </div>
+              <% genle_id = Genle.where(genle_category_id: genle_category.id) %>
+              <div class="index_genle_name_container">
+                <% genle_id.each do |genle|%>
+                  <%= link_to youtubers_genle_path(genle_name: genle.name), class: "list-genle" do %>
+                    <div class="index_genle_name_column">
+                      <%= link_to genle.name, youtubers_genle_path(genle_name: genle.name), class: "index_genle_name" %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    <section class="side_column">
+      <div class="category_search_column">
+        <h5 class="category_title">カテゴリーから探す</h5>
+        <%= form_tag ('/youtubers/category'), method: :get do %>
+          <select name="category" >
+            <optgroup label="カテゴリーリスト">
+              <% @category_id.each do |category_id| %>
+                <option value=<%= category_id.category %> ><%= category_id.name %></option>
+              <% end %>
+            </optgroup>
+          </select>
+          <button type="submit" class="button1"><i class="fas fa-search"></i></button>
         <% end %>
       </div>
-    <% end %>
+      <div class="sice_navi_inner">
+        <nav class="side_navi">
+          <h5 class="side_navi_title">よく見られているページ</h5>
+          <ul class="side_navi_list">
+            <li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
   </div>
-</div>
+</main>

@@ -10,15 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_01_114406) do
+ActiveRecord::Schema.define(version: 2019_12_13_130428) do
 
-  create_table "genles", force: :cascade do |t|
+  create_table "genle_categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "genles_youtubers", id: false, force: :cascade do |t|
+  create_table "genles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "group"
+    t.integer "genle_category_id"
+  end
+
+  create_table "genles_categorys_groups", id: false, force: :cascade do |t|
+    t.integer "genle_id"
+    t.integer "genle_category_id"
+    t.index ["genle_category_id"], name: "index_genles_categorys_groups_on_genle_category_id"
+    t.index ["genle_id"], name: "index_genles_categorys_groups_on_genle_id"
+  end
+
+  create_table "genles_youtubers", force: :cascade do |t|
     t.integer "genle_id"
     t.integer "youtuber_id"
     t.index ["genle_id"], name: "index_genles_youtubers_on_genle_id"
@@ -38,6 +53,7 @@ ActiveRecord::Schema.define(version: 2019_12_01_114406) do
     t.string "number_of_registrant"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "youtuber_id"
   end
 
   create_table "users", force: :cascade do |t|

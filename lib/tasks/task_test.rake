@@ -24,11 +24,16 @@ namespace :task_test do
           response_playlist = client.get(api_id)
           response_str = response_playlist.body
           response_hash = JSON.parse(response_str)
+          begin
           #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
-          video_id = response_hash['items'][0]['id']['videoId']
+            video_id = response_hash['items'][0]['id']['videoId']
+            p video_id
+          rescue
+            p "video_idの中身は空です"
+          end
           p video_id
           # 引数に指定した変数が存在し、その値が空や0でなければFALSEを返し、それ以外の場合はTRUEを返します
-          if video_id.empty?
+          if video_id.nil?
             p "値が空です"
             video_id = "idが存在しません"
             video_title = "titleが存在しません"

@@ -5,6 +5,7 @@ class Youtuber < ApplicationRecord
   has_and_belongs_to_many :genles
   #likesテーブルを中間テーブルとして経由してuserテーブルから情報を取ってくると言うことを表してます。
   has_many :liked_youtubers, through: :likes, source: :user
+  has_many :videos
   def iine(user)
     likes.create(user_id: user.id)
   end

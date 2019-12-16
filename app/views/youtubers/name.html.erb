@@ -1,0 +1,57 @@
+<main class="main">
+  <div class="inner">
+    <section class="main_column">
+      <div class="search_container">
+        <div class="top_space">
+        </div>
+        <h1 class="search_title">Youtuber検索</h1>
+        <div class="search_foram">
+          <%= form_tag(youtubers_name_search_path, method: :get, enforce_utf8: false, class: "name_search_form") do %>
+            <%= autocomplete_field_tag :youtuber_name, nil,  autocomplete_youtuber_name_youtubers_path, class: "name_search", placeholder: "YouTuber名で検索" %>
+            <button type="submit" class="button1">
+              <i class="fas fa-search"></i>
+            </button>
+          <% end %>
+        </div>
+        <section class="name_youtuber_column">
+          <p class="boxtitle">YouTuber</p>
+          <% @youtuber_search.each do |data| %>
+            <div class="youtuber_container">
+              <div class="youtuber_information">
+                <h5 class="youtuber_name"><%= link_to "#{data.name}", "/youtubers/#{data.id}" %></h5>
+                <span class="youtuber_subscriber"><%= "チャンネル登録者数： #{data.number_of_registrant}人" %></span>
+              </div>
+              <b class="genle_description">ジャンル：</b>
+              <% data.genles.each do |genle| %>
+                <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
+							<% end %>
+							<% data.videos.each do |video| %>
+								<% if video %>
+									<%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
+								<% else %>
+									"動画が見つかりません"
+								<% end %>
+							<% end %>
+            </div>
+          <% end %>
+        </section>
+			</div>
+			<% if @is_pagenate %>
+				<%= paginate @youtuber_search %>
+			<% end %>
+		</section>
+		<section class="side_column">
+			<div class="sice_navi_inner">
+				<nav class="side_navi">
+					<h5 class="side_navi_title">よく見られているページ</h5>
+					<ul class="side_navi_list">
+						<li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+						<li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+						<li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
+						<li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
+					</ul>
+				</nav>
+			</div>
+		</section>
+  </div>
+</main>

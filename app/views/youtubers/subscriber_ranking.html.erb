@@ -1,15 +1,14 @@
 <h3>登録者数ランキング</h3>
-<% subscriber = @subscriber.sort_by{|data| data[0]}.reverse %>
 <table>
   <tr>
     <th>順位</th>
     <th>チャンネル名</th>
     <th>登録者数</th>
   </tr>
-  <%  subscriber.each.with_index(1) do |data, i| %>
+  <%  @rank.each.with_index(1) do |data, i| %>
     <tr>
       <td><%= "第#{i}位" %></td>
-      <td><%= link_to "#{data.name}", "/youtubers/#{@youtuber.id}" %></td>
+      <td><%= link_to "#{data.name}", "/youtubers/#{data.youtuber_id}" %></td>
       <td><%= data.number_of_registrant %></td>
     </tr>
   <% end %>

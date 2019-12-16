@@ -66,7 +66,7 @@ namespace :youtuber_next_2 do
         test << data
       end
     end
-    #ranktableに値を格納
+    #youtuberstableに値を格納
     youtubers_data.each do |data|
       unless Youtuber.exists?(channel_id: data[2])
         data[1].to_i

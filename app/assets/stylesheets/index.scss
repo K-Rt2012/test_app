@@ -1,0 +1,34 @@
+.index_genle_title{
+  padding: 6px;
+  background-color:  #222222;
+  font-size: 1rem;
+  color: antiquewhite;
+  font-weight: bold;
+}
+.index_genle_name_container{
+  width: 90%;
+  max-width: 660px;
+  margin: 10px auto;
+}
+.index_genle_name{
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin: 13px 0px 13px 0px;
+}
+.index_genle_name_column:hover{
+  background-color: #f37579;
+}
+.index_genle_name_column{
+  width: 150px;
+  height: 46px;
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+  border-radius: 80px;
+  margin: 10px 5px 10px 5px;
+  display: inline-block;
+  text-align: center;
+  border: solid 1px black;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+}

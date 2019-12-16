@@ -1,18 +1,10 @@
 class YoutubersController < ApplicationController
-  #http
   require 'httpclient'
-
   def index
     @youtubers = Youtuber.all
     @category_id = VideoCategory.all
-    #@genle = Youtuber.includes(:genles).where('groups.id' => genle.id)
-    if params[:youtuber_name]
-      youtuber_name = params[:youtuber_name]
-      # where likeであいまい検索
-      @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'")
-    else
-      @youtuber_search = Youtuber.first(50)
-    end
+    @genle_category = GenleCategory.all
+    @genle = Genle.new
   end
 
   def show
@@ -28,7 +20,6 @@ class YoutubersController < ApplicationController
   def category
     @category_id = VideoCategory.find_by(category: params[:category])
     @category = Video.where(video_category_id: @category_id.category)
-    #@video_category = VideoCategory.find_by(category: @category.video_category_id)
   end
 
   def category_search
@@ -36,15 +27,27 @@ class YoutubersController < ApplicationController
   end
 
   def subscriber_ranking
-    @subscriber = Youtuber.all
-    @youtuber = Youtuber.find_by(channel_id: @subscriber.channel_id)
+    @rank = Rank.all
+    #@youtuber = Youtuber.find_by(channel_id: @rank.channel_id)
   end
-end
-def genle
-  @genle_name = params[:genle_name]
-  p @genle_name
-  genle = Genle.find_by(name: params[:genle_name])
-  p genle
-  @genle_search = Youtuber.includes(:genles).where('genles.id' => genle.id)
-  p @genle_search
+  def genle
+    @genle_name = params[:genle_name]
+    p @genle_name
+    genle = Genle.find_by(name: params[:genle_name])
+    p genle
+    @genle_search = Youtuber.includes(:genles).where('genles.id' => genle.id)
+    p @genle_search
+  end
+  def name
+    @is_pagenate = false
+    @page = params[:page]
+    if params[:youtuber_name]
+      youtuber_name = params[:youtuber_name]
+      # where likeであいまい検索
+      @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'").page(@page).per(20)
+      @is_pagenate = true
+    else
+      @youtuber_search = Youtuber.first(20)
+    end
+  end
 end

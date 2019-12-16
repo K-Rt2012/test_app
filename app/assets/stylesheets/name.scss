@@ -1,0 +1,47 @@
+.name_youtuber_column{
+  background-color: rgb(192, 192, 192);
+  max-width:800px;
+  min-height:500px;
+  height:auto ;
+  margin-top: 50px;
+}
+.youtuber_container{
+  padding: 10px  10px;
+  background-color: #fff;
+  margin: 10px 10px;
+}
+.youtuber_infomation{
+  margin-bottom: 10px;
+}
+.youtuber_name{
+  text-decoration: none;
+  font-weight: bold
+}
+.youtuber_subscriber{
+
+}
+.youtuber_genle{
+  padding: 2px 3px;
+  background-color: rgb(151, 151, 151);
+  color: #EEEEEE;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 6px;
+  display: inline-block;
+  font-size: 0.8rem;
+}
+.genle_hover:hover{
+  background-color: #f37579;
+}
+.boxtitle{
+  background-color: black;
+  padding-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px 0px;
+  color: rgb(221, 219, 219);
+
+}
+.genle_description{
+  font-size: 0.8em;
+}

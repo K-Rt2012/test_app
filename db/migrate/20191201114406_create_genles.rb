@@ -6,7 +6,7 @@ class CreateGenles < ActiveRecord::Migration[5.2]
       t.timestamps
     end
     #belongs_to :モデル名 N対Nの関係を紐づける
-    create_table :genles_youtubers, id: false do |t|
+    create_table :genles_youtubers do |t|
       t.belongs_to :genle
       t.belongs_to :youtuber
     end

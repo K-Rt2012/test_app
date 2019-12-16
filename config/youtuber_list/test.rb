@@ -2,40 +2,24 @@ require 'csv'
 require 'httpclient'
 Encoding.default_external = 'utf-8'
 
-videos_data = Array.new
-CSV.foreach('youtuber_next_data.csv').with_index(1) do |data,index|
-  #next if index > 100
-  p index
+youtubers_data = Array.new
+CSV.foreach('youtuber_next_data.csv').each do |data|
   p data[2]
   p data[0]
-  #youtuberstableに登録されているデータを弾く処理
-  if data[2]
-    api_id = "https://www.googleapis.com/youtube/v3/search?part=id,snippet&channelId=#{data[2]}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
-    client = HTTPClient.new()
-    response_playlist = client.get(api_id)
-    response_str = response_playlist.body
-    p response_str
-    response_hash = JSON.parse(response_str)
-    p response_hash
-    #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
-    video_id = response_hash['items'][0]['id']['videoId']
-    if video_id != ""
-      p video_id
-      video_title = response_hash["items"][0]["snippet"]["title"]
-      p video_title
-      api_category_id = "https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=#{video_id}&key=AIzaSyBd1wcxiyGzgosb5Renoi4eH3hWph7hulY"
-      response_category = client.get(api_category_id)
-      response_category_str = response_category.body
-      response_category_hash = JSON.parse(response_category_str)
-      #多次元ハッシュ取り出し方、配列"items"の0番目のインデックスを指定して取り出し
-      category_id = response_category_hash["items"][0]["snippet"]["categoryId"]
-      p category_id
-      videos_data << [video_id, video_title, category_id, data[2]]
-    end
-  end
+  p data[1]
+  data[1] = data[1].gsub(/,|人/ ,"")
+  data[1] = data[1].to_i
+  p data[1]
+  youtubers_data << data
 end
-csv_format = CSV.open(Rails.root.join('config', 'youtuber_list', 'video_data.csv'), "w:UTF-8") do |test|
-  videos_data.each do |data|
-    test << data
-  end
+#チャンネルが存在しない場合、要素を除去
+youtubers_data.delete_if {|data| data[2].empty?}
+youtubers_data = youtubers_data.sort_by{|data| data[1]}.reverse
+youtubers_data.each do |subscriber|
+  # 登録者数の整数を文字列に変える処理（gsubで置き換える場合は文字列でないといけない）
+  subscriber[1] = subscriber[1].to_s
+  # insertメソッドで指定の位置に差し込み
+  subscriber[1] = subscriber[1].insert(-4, ",").reverse
+  subscriber[1] = subscriber[1].insert(0, "人").reverse
+  p subscriber[1]
 end
