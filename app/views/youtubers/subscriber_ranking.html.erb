@@ -1,15 +1,37 @@
-<h3>登録者数ランキング</h3>
-<table>
-  <tr>
-    <th>順位</th>
-    <th>チャンネル名</th>
-    <th>登録者数</th>
-  </tr>
-  <%  @rank.each.with_index(1) do |data, i| %>
-    <tr>
-      <td><%= "第#{i}位" %></td>
-      <td><%= link_to "#{data.name}", "/youtubers/#{data.youtuber_id}" %></td>
-      <td><%= data.number_of_registrant %></td>
-    </tr>
-  <% end %>
-</table>
+<main class="main">
+  <div class="page_description_container">
+    <div class="page_description_column">
+      <h2 class="page_description_title">ユーチューバーランキング</h2>
+      <p class="page_description">※YouTube公式の仕様変更のため、チャンネル登録者数の正確な値が取得できない可能性があります。
+        <br>現在、ランキングの計測方法について対応を検討しておりますので、今しばらくお待ちください。
+      </p>
+    </div>
+  </div>
+  <div class="inner">
+    <section class="rank_main_column">
+      <div class="search_container">
+        <div class="top_space">
+        </div>
+        <div class="rank_container">
+        <h3 class="rank_title">登録者数ランキング</h3>
+          <%  @rank.each.with_index(1) do |data, i| %>
+            <div class="rank_column">
+              <h4 class="rank_number"><%= "#{data.id}位" %></h4>
+              <% video = Video.find_by(youtuber_id: data.youtuber_id) %>
+              <% unless video.nil? %>
+                <p><%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "rank_video_samnaile"%></p>
+              <% else %>
+                <p><%= image_tag 'movie.jpg', class: "rank_video_samnaile" %></p>
+              <% end %>
+              <div class="rank_channel_name"><%= link_to "#{data.name}", "/youtubers/#{data.youtuber_id}" %></div>
+              <div class="rank_subscrivber_column">
+                <p class="rank_subscrivber">チャンネル登録者数：<%= data.number_of_registrant %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <%= paginate @rank %>
+      </div>
+    </section>
+  </div>
+</main>

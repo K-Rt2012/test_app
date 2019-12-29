@@ -1,4 +1,10 @@
 <main class="main">
+  <div class="page_description_container">
+  <div class="page_description_column">
+    <h2 class="page_description_title">ユーチューバー検索</h2>
+    <p class="page_description">総勢2800名のユーチューバーから検索を行います。</p>
+  </div>
+  </div>
   <div class="inner">
     <section class="main_column">
       <div class="search_container">
@@ -20,25 +26,30 @@
               <div class="youtuber_information">
                 <h5 class="youtuber_name"><%= link_to "#{data.name}", "/youtubers/#{data.id}" %></h5>
                 <span class="youtuber_subscriber"><%= "チャンネル登録者数： #{data.number_of_registrant}人" %></span>
-              </div>
-              <b class="genle_description">ジャンル：</b>
-              <% data.genles.each do |genle| %>
-                <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
-							<% end %>
-							<% data.videos.each do |video| %>
-								<% if video %>
-									<%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
-								<% else %>
-									"動画が見つかりません"
+								<br><b class="genle_description">ジャンル：</b>
+								<% data.genles.each do |genle| %>
+									<%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
 								<% end %>
-							<% end %>
-            </div>
+							</div>
+							<div class="youtuber_video_container">
+                <% data.videos.each do |video| %>
+                  <%= video.id %>
+                  <% if video.id.nil? %>
+                    <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
+									<% else %>
+                    <%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
           <% end %>
+          <div class="pagenavi">
+          <% if @is_pagenate %>
+            <%= paginate @youtuber_search %>
+          <% end %>
+          </div>
         </section>
-			</div>
-			<% if @is_pagenate %>
-				<%= paginate @youtuber_search %>
-			<% end %>
+      </div>
 		</section>
 		<section class="side_column">
 			<div class="sice_navi_inner">

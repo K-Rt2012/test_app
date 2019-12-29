@@ -1,0 +1,55 @@
+.rank_container{
+  overflow: hidden;
+  text-align:  center;
+}
+.rank_column{
+  width: 45%;
+  margin-right: 10px;
+  margin-left: 23px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  float: left;
+  display: inline-block;
+  border-radius: 20px;
+  background-color: white;
+  height: 320px;
+  position: relative;
+}
+.rank_video_samnaile{
+  width: 200px;
+  height: 130px;
+}
+.rank_main_column{
+  max-width: 800px;
+  width: 90%;
+  background-color: rgb(87, 87, 87);
+  float: left;
+}
+.rank_number{
+  font-weight: 900;
+  font-size: 2rem;
+  font-style:italic;
+  margin-top: 10px;
+}
+.rank_subscrivber{
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0px;
+}
+.rank_subscrivber_column{
+  background-color: rgb(39, 38, 38);
+  padding: 10px;
+  border-radius: 0px 0px 20px 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.rank_channel_name{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.rank_title{
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+}

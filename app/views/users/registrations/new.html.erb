@@ -1,29 +1,27 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="login_column">
+  <div class="login">
+    <div class="login-triangle"></div>
+    <h2 class="login-header">新規作成</h2>
+    <div class="login-container">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %> 
+        <div class="field">
+          <p><%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder: "Email" %></p>
+        </div>
+        <div class="field">
+          <p class="password_enter"><%= f.password_field :password, autocomplete: "new-password", placeholder: "Password" %></p>
+          <% if @minimum_password_length %>
+            <em class="password_length">(パスワードは<%= @minimum_password_length %>文字以上必要です)</em>
+          <% end %><br />
+        </div>
+        <div class="field">
+          <p><%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "パスワードを再入力してください" %></p>
+        </div>
+        <div class="actions">
+          <p><%= f.submit "送信" %></p>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+  <div class="sighn_in_column"><%= link_to "ログインはこちら", new_user_session_path, class: "sighn_in" %></div>
+</div>

@@ -1,16 +1,19 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="login_column">
+  <div class="login">
+    <div class="login-triangle"></div>
+    <h2 class="login-header">パスワードを変更する</h2>
+    <div class="login-container">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="field">
+          <p><%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder: "Email" %></p>
+        </div>
+        <div class="actions">
+          <p><%= f.submit "送信" %></p>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+  <div class="sighn_in_column"><%= link_to "ログインはこちら", new_user_session_path, class: "sighn_in" %></div>
+  <div class="sighn_up_column"><%= link_to "新規作成はこちら", new_user_registration_path, class: "sighn_up" %>
+</div>

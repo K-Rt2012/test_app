@@ -27,16 +27,22 @@ class YoutubersController < ApplicationController
   end
 
   def subscriber_ranking
-    @rank = Rank.all
-    #@youtuber = Youtuber.find_by(channel_id: @rank.channel_id)
+    @page = params[:page]
+    @rank = Rank.all.page(@page).per(20)
   end
   def genle
+    @is_pagenate = false
+    @page = params[:page]
     @genle_name = params[:genle_name]
-    p @genle_name
-    genle = Genle.find_by(name: params[:genle_name])
-    p genle
-    @genle_search = Youtuber.includes(:genles).where('genles.id' => genle.id)
-    p @genle_search
+    if params[:genle_name]
+      @genle = Genle.find_by(name: params[:genle_name])
+      p @genle
+      @genle_search = Youtuber.includes(:genles).where('genles.id' => @genle.id).page(@page).per(20)
+      @is_pagenate = true
+      p @genle_search
+    else
+      @genle_search = Youtuber.first(20)
+    end
   end
   def name
     @is_pagenate = false
