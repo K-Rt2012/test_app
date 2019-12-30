@@ -94,6 +94,9 @@ footer{
   background-color: #fff;
   margin: 10px 10px;
 }
+.main_column div:not(:last-child){
+  margin-bottom: 0;
+}
 .youtuber_infomation{
   margin-bottom: 10px;
 }
@@ -360,6 +363,7 @@ footer{
 }
 .page_description_container{
   background-image: url("夜の街並み.jpeg");
+  background-size: 100%;
 }
 .page_description_title,.page_description{
   color: white;

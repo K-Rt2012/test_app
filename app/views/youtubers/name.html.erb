@@ -1,9 +1,9 @@
 <main class="main">
   <div class="page_description_container">
-  <div class="page_description_column">
-    <h2 class="page_description_title">ユーチューバー検索</h2>
-    <p class="page_description">総勢2800名のユーチューバーから検索を行います。</p>
-  </div>
+    <div class="page_description_column">
+      <h2 class="page_description_title">ユーチューバー検索</h2>
+      <p class="page_description">総勢2800名のユーチューバーから検索を行います。</p>
+    </div>
   </div>
   <div class="inner">
     <section class="main_column">
@@ -30,16 +30,20 @@
 								<% data.genles.each do |genle| %>
 									<%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
 								<% end %>
-							</div>
-							<div class="youtuber_video_container">
-                <% data.videos.each do |video| %>
-                  <%= video.id %>
-                  <% if video.id.nil? %>
-                    <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
-									<% else %>
-                    <%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
-									<% end %>
-								<% end %>
+              </div>
+              <div class="youtuber_video_container">
+                <% if data.videos.present? %>
+                  <% data.videos.each do |video| %>
+                    <%= video.id %>
+                    <% if video.id.nil? %>
+                      <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
+                    <% else %>
+                      <%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
+                <% end %>
 							</div>
 						</div>
           <% end %>
