@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'youtubers/subscriber_ranking' => 'youtubers#subscriber_ranking'
   get 'youtubers/home' => 'youtubers#home'
   get 'youtubers/name_search' => 'youtubers#name'
+  root 'youtubers#home'
   #autocomplete機能のルートを設定
   resources :youtubers do
     get :autocomplete_youtuber_name, on: :collection # 追加
