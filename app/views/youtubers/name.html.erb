@@ -20,7 +20,7 @@
           <% end %>
         </div>
         <section class="name_youtuber_column">
-          <p class="boxtitle">YouTuber</p>
+          <p class="name_boxtitle"><%= @yotuber_name %>YouTuber</p>
           <% @youtuber_search.each do |data| %>
             <div class="youtuber_container">
               <div class="youtuber_information">
@@ -34,7 +34,6 @@
               <div class="youtuber_video_container">
                 <% if data.videos.present? %>
                   <% data.videos.each do |video| %>
-                    <%= video.id %>
                     <% if video.id.nil? %>
                       <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
                     <% else %>
@@ -54,19 +53,32 @@
           </div>
         </section>
       </div>
-		</section>
-		<section class="side_column">
-			<div class="sice_navi_inner">
-				<nav class="side_navi">
-					<h5 class="side_navi_title">よく見られているページ</h5>
-					<ul class="side_navi_list">
-						<li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
-						<li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
-						<li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
-						<li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
-					</ul>
-				</nav>
-			</div>
-		</section>
+    </section>
+    <section class="side_column">
+      <div class="category_search_column">
+        <h5 class="category_title">カテゴリーから動画を探す</h5>
+        <%= form_tag ('/youtubers/category'), method: :get do %>
+          <select name="category" >
+            <optgroup label="カテゴリーリスト">
+              <% @category_id.each do |category_id| %>
+                <option value=<%= category_id.category %> ><%= category_id.name %></option>
+              <% end %>
+            </optgroup>
+          </select>
+          <button type="submit" class="button1"><i class="fas fa-search"></i></button>
+        <% end %>
+      </div>
+      <br><div class="sice_navi_inner">
+        <nav class="side_navi">
+          <h5 class="side_navi_title">よく見られているページ</h5>
+          <ul class="side_navi_list">
+            <li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
   </div>
 </main>

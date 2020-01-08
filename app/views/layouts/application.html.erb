@@ -26,9 +26,14 @@
         <li><%= link_to "ランキング", "/youtubers/subscriber_ranking" %></li>
         <li><%= link_to "ユーチューバー検索", "/youtubers/name_search/" %></li>
         <li><%= link_to "ジャンル検索", "/youtubers/" %></li>
-        <li><%= link_to "ログイン", "/users/sign_in" %></li>
-        <li class="right"><%= link_to "ログアウト", "/users/sign_out", method: :DELETE %></li>
-      </ul>
+        <% unless current_user %>
+          <li><%= link_to "ログイン", "/users/sign_in" %></li>
+          <li><%= link_to "アカウント登録", "/users/sign_up" %></li>
+        <% end %>
+        <% if current_user %>
+          <li class="right"><%= link_to "ログアウト", "/users/sign_out", method: :DELETE %></li>
+        <% end %>
+          </ul>
     </header>
     <div class="wrapper">
       <%= yield %>

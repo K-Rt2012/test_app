@@ -11,19 +11,27 @@
     <section class="rank_main_column">
       <div class="search_container">
         <div class="top_space">
+          <h3 class="rank_title">登録者数ランキング</h3>
         </div>
         <div class="rank_container">
-        <h3 class="rank_title">登録者数ランキング</h3>
-          <%  @rank.each.with_index(1) do |data, i| %>
+          <% @rank.each.with_index(1) do |data, i| %>
             <div class="rank_column">
               <h4 class="rank_number"><%= "#{data.id}位" %></h4>
               <% video = Video.find_by(youtuber_id: data.youtuber_id) %>
               <% unless video.nil? %>
-                <p><%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "rank_video_samnaile"%></p>
+                <%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "rank_video_samnaile"%>
               <% else %>
-                <p><%= image_tag 'movie.jpg', class: "rank_video_samnaile" %></p>
+                <%= image_tag 'movie.jpg', class: "rank_video_samnaile" %>
               <% end %>
               <div class="rank_channel_name"><%= link_to "#{data.name}", "/youtubers/#{data.youtuber_id}" %></div>
+              <div class="rank_genle_title_column">
+                <b class="genle_description">ジャンル：</b>
+                <section class="rank_genle_column">
+                  <% Youtuber.genle_search(data.youtuber_id).each do |genle| %>
+                    <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
+                  <% end %>
+                </section>
+              </div>
               <div class="rank_subscrivber_column">
                 <p class="rank_subscrivber">チャンネル登録者数：<%= data.number_of_registrant %></p>
               </div>
@@ -31,6 +39,32 @@
           <% end %>
         </div>
         <%= paginate @rank %>
+      </div>
+    </section>
+    <section class="side_column">
+      <div class="category_search_column">
+        <h5 class="category_title">カテゴリーから動画を探す</h5>
+        <%= form_tag ('/youtubers/category'), method: :get do %>
+          <select name="category" >
+            <optgroup label="カテゴリーリスト">
+              <% @category_id.each do |category_id| %>
+                <option value=<%= category_id.category %> ><%= category_id.name %></option>
+              <% end %>
+            </optgroup>
+          </select>
+          <button type="submit" class="button1"><i class="fas fa-search"></i></button>
+        <% end %>
+      </div>
+      <br><div class="sice_navi_inner">
+        <nav class="side_navi">
+          <h5 class="side_navi_title">よく見られているページ</h5>
+          <ul class="side_navi_list">
+            <li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
+            <li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
+          </ul>
+        </nav>
       </div>
     </section>
   </div>

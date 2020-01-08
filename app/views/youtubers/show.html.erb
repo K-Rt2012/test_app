@@ -1,23 +1,83 @@
-<h3><%= "#{@youtuber.name}のプロフィール" %></h3>
-<%=link_to @youtuber.name, 'https://www.youtube.com/channel/' + @youtuber.channel_id %>
-<br><iframe width="560" height="315" src="<%= 'https://www.youtube.com/embed/' + @video.video_id %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<%= @category.name %>
-<% if current_user %>
-  <% if current_user.already_liked?(@youtuber) %>
-    <%= form_tag("/likes/#{@youtuber.id}", method: :delete) do %>
-      <%= hidden_field_tag :id, @youtuber.id %>
-      <button type= submit>
-        <i class="fas fa-thumbs-up nogood_color faa-pulse animate animated-hover fa-2x"></i>
-      </button>
-      <%= "グッド数：#{@good_count}" %>
-    <% end %>
-    <% else %>
-    <%= form_tag("/likes", method:"post") do %>
-      <%= hidden_field_tag :id, @youtuber.id %>
-        <button type = submit>
-          <i class="fas fa-thumbs-up good_color faa-pulse animate animated-hover fa-2x"></i>
-        </button>
-    <% end %>
-  <% end %>
-<% end %>
-<br><%= "グッド数：#{@good_count}" %>
+<div class="inner">
+  <section class="main_column">
+    <div class="top_space">
+      <div class="show_channel_title"><%= "#{@youtuber.name}のプロフィール" %></div>
+    </div>
+    <div class="show_youtuber_column">
+      <div>
+        <% if @video %>
+          <iframe src="<%= 'https://www.youtube.com/embed/' + @video.video_id %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen, class="show_video_samnaile"></iframe>
+        <% else %>
+          <%= image_tag 'movie.jpg', class: "show_video_samnaile" %>
+        <% end %>
+      </div>
+      <div class="show_infomation">
+        <p class="show_channel_name"><%=link_to @youtuber.name, 'https://www.youtube.com/channel/' + @youtuber.channel_id %></p>
+        <p class="show_channel_subscriber"><%= "チャンネル登録者数: #{@youtuber.number_of_registrant}人" %></p>
+        <div class="show_category_genle_column clearfix">
+          <% if @video %>
+            <div class="show_category_column">
+              <b class="show_channel_category">カテゴリー: </b>
+              <%= link_to "#{@category.name}", youtubers_category_path(category: @category.category), class: "show_video_category" %>
+            </div>
+          <% end %>
+          <div class="show_genle_column">
+            <b class="show_channel_genle">ジャンル: </b>
+            <% @youtuber.genles.each do |genle| %>
+              <%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="show_good_column">
+        <% if current_user %>
+          <% if current_user.already_liked?(@youtuber) %>
+            <%= form_tag("/likes/#{@youtuber.id}", method: :delete) do %>
+              <%= hidden_field_tag :id, @youtuber.id %>
+              <br><button type= submit>
+                <i class="fas fa-thumbs-up nogood_color faa-pulse animate animated-hover fa-2x"></i>
+              </button>
+            <% end %>
+          <% else %>
+          <%= form_tag("/likes", method:"post") do %>
+            <%= hidden_field_tag :id, @youtuber.id %>
+            <br><button type = submit>
+              <i class="fas fa-thumbs-up good_color faa-pulse animate animated-hover fa-2x"></i>
+            </button>
+          <% end %>
+        <% end %>
+      <% end %>
+        <div class="show_good_count_column">
+          <span class="show_good">グッド数: </span>
+          <span class="show_good_count"><%= @good_count %></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="side_column">
+    <div class="category_search_column">
+      <h5 class="category_title">カテゴリーから動画を探す</h5>
+      <%= form_tag ('/youtubers/category'), method: :get do %>
+        <select name="category" >
+          <optgroup label="カテゴリーリスト">
+            <% @category_id.each do |category_id| %>
+              <option value=<%= category_id.category %> ><%= category_id.name %></option>
+            <% end %>
+          </optgroup>
+        </select>
+        <button type="submit" class="button1"><i class="fas fa-search"></i></button>
+      <% end %>
+    </div>
+    <br><div class="sice_navi_inner">
+      <nav class="side_navi">
+        <h5 class="side_navi_title">よく見られているページ</h5>
+        <ul class="side_navi_list">
+          <li class="side_navi_item"><%= link_to "人気ランキング", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+          <li class="side_navi_item"><%= link_to "YouTuber検索", youtubers_subscriber_ranking_path, class: "navi-title" %></li>
+          <li class="side_navi_item"><%= link_to "ジャンル検索", youtubers_path, class: "navi-title" %></li>
+          <li class="side_navi_item"><%= link_to "TOP", youtubers_home_path, class: "navi-title" %></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</div>

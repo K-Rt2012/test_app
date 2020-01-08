@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users, only: [:new]
   get 'youtubers/genle' => 'youtubers#genle'
   get 'youtubers/category' => 'youtubers#category'
   get 'youtubers/subscriber_ranking' => 'youtubers#subscriber_ranking'

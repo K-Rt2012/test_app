@@ -38,36 +38,38 @@ def fatch_genle_category(genle_name)
     GenleCategory.find(13)
   end
 end
-p VideoCategory.create(category: 1, name: "映画とアニメ")
-p VideoCategory.create(category: 2, name: "自動車と乗り物")
-p VideoCategory.create(category: 10, name: "音楽")
-p VideoCategory.create(category: 15, name: "ペットと動物")
-p VideoCategory.create(category: 17, name: "スポーツ")
-p VideoCategory.create(category: 19, name: "旅行とイベント")
-p VideoCategory.create(category: 20, name: "ゲーム")
-p VideoCategory.create(category: 22, name: "ブログ")
-p VideoCategory.create(category: 23, name: "コメディー")
-p VideoCategory.create(category: 24, name: "エンターテイメント")
-p VideoCategory.create(category: 25, name: "ニュースと政治")
-p VideoCategory.create(category: 26, name: "ハウツーとスタイル")
-p VideoCategory.create(category: 27, name: "教育")
-p VideoCategory.create(category: 28, name: "科学と技術")
+# p VideoCategory.create(category: 1, name: "映画とアニメ")
+# p VideoCategory.create(category: 2, name: "自動車と乗り物")
+# p VideoCategory.create(category: 10, name: "音楽")
+# p VideoCategory.create(category: 15, name: "ペットと動物")
+# p VideoCategory.create(category: 17, name: "スポーツ")
+# p VideoCategory.create(category: 19, name: "旅行とイベント")
+# p VideoCategory.create(category: 20, name: "ゲーム")
+# p VideoCategory.create(category: 22, name: "ブログ")
+# p VideoCategory.create(category: 23, name: "コメディー")
+# p VideoCategory.create(category: 24, name: "エンターテイメント")
+# p VideoCategory.create(category: 25, name: "ニュースと政治")
+# p VideoCategory.create(category: 26, name: "ハウツーとスタイル")
+# p VideoCategory.create(category: 27, name: "教育")
+# p VideoCategory.create(category: 28, name: "科学と技術")
+# p VideoCategory.create(category: 29, name: "カテゴリーが存在しません")
 
-GenleCategory.create(id: 1, name: "美容・健康")
-GenleCategory.create(id: 2,name: "趣味・遊び")
-GenleCategory.create(id: 3,name: "エリア")
-GenleCategory.create(id: 4,name: "パーソナリティ")
-GenleCategory.create(id: 5,name: "実用・教養")
-GenleCategory.create(id: 6,name: "エンタメ")
-GenleCategory.create(id: 7,name: "ゲーム")
-GenleCategory.create(id: 8,name: "バーチャル・サブカル")
-GenleCategory.create(id: 9,name: "音楽")
-GenleCategory.create(id: 10,name: "料理・食事")
-GenleCategory.create(id: 11,name: "ペット・動物")
-GenleCategory.create(id: 12,name: "スポーツ・野外")
-GenleCategory.create(id: 13,name: "その他")
+# GenleCategory.create(id: 1, name: "美容・健康")
+# GenleCategory.create(id: 2,name: "趣味・遊び")
+# GenleCategory.create(id: 3,name: "エリア")
+# GenleCategory.create(id: 4,name: "パーソナリティ")
+# GenleCategory.create(id: 5,name: "実用・教養")
+# GenleCategory.create(id: 6,name: "エンタメ")
+# GenleCategory.create(id: 7,name: "ゲーム")
+# GenleCategory.create(id: 8,name: "バーチャル・サブカル")
+# GenleCategory.create(id: 9,name: "音楽")
+# GenleCategory.create(id: 10,name: "料理・食事")
+# GenleCategory.create(id: 11,name: "ペット・動物")
+# GenleCategory.create(id: 12,name: "スポーツ・野外")
+# GenleCategory.create(id: 13,name: "その他")
 
-CSV.foreach(Rails.root.join('config', 'youtuber_list', 'youtuber_next_data.csv')) do |youtuber_data|
+youtubers_rank_data = Array.new
+CSV.foreach(Rails.root.join('config', 'youtuber_list', 'youtuber_next_data.csv')).with_index do |youtuber_data, i|
   p youtuber_data[2]
   #youtuberstableに登録されているデータを弾く処理
   unless Youtuber.exists?(channel_id: youtuber_data[2])
@@ -99,8 +101,13 @@ CSV.foreach(Rails.root.join('config', 'youtuber_list', 'youtuber_next_data.csv')
     youtuber_data[1].to_i
     p youtuber_data[1]
     Youtuber.find_or_create_by(name: youtuber_data[0], number_of_registrant: youtuber_data[1], channel_id: youtuber_data[2], genles: a)
+    youtuber_data[1] = youtuber_data[1].gsub(/,|人/ ,"")
+    youtuber_data[1] = youtuber_data[1].to_i
+    p youtuber_data[1]
+    youtubers_rank_data << [youtuber_data[0], youtuber_data[1], youtuber_data[2], i]
   end
 end
+#videostable初期データ取り込み
 CSV.foreach(Rails.root.join('config', 'youtuber_list', 'video_data.csv')) do |video_data|
   p video_data[0]
   category = VideoCategory.find_by(category: video_data[2])

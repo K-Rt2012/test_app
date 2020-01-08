@@ -10,6 +10,6 @@ class User < ApplicationRecord
    #ユーザーがyoutuberに対して既にいいねしているか
    def already_liked?(youtuber)
     #条件に一致するデータが存在するかどうかを調べたいときは、exists?を使う
-    likes.exists?(youtuber_id: youtuber.id)
+    self.likes.exists?(youtuber_id: youtuber.id)
   end
 end

@@ -99,6 +99,7 @@ footer{
 }
 .youtuber_infomation{
   margin-bottom: 10px;
+  
 }
 .youtuber_name{
   text-decoration: none;
@@ -374,6 +375,7 @@ footer{
 .pagination{
   justify-content: center;
   padding: 30px 0px;
+  margin: 0;
 }
 .pagination>.other>a{
   border: none;     /*枠線をなくす*/
@@ -403,4 +405,114 @@ footer{
 }
 .pagination>li{
   padding: 3px;
+}
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.category_title{
+  font-weight: bold;
+}
+.index_genle_search_title{
+  font-weight: bold;
+  padding-left: 15px;
+}
+
+/*ユーチューバーGROWTHとは？*/
+.home_header{
+  background-image: url("home_header.jpg");
+  background-size: cover;
+  color: white;
+}
+.home_body{
+  width: 90%;
+  max-width: 1040px;
+  margin: 50px auto;
+  position: relative;
+  z-index: 2;
+  background-color:white;
+}
+.home_sab_title{
+  background-color: #D9E5FF;
+}
+.home_header_title{
+  margin: 0px 30px;
+}
+.home_header_text{
+  margin: 0px 20px;
+
+  padding: 20px 0px;
+}
+/*ユーチューバー詳細ページ*/
+.good_color{
+  color: gray
+}
+
+.nogood_color{
+  color: rgb(240, 54, 85)
+}
+.rank_container{
+  overflow: hidden;
+  text-align:  center;
+}
+.rank_column{
+  width: 45%;
+  margin-right: 10px;
+  margin-left: 23px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  float: left;
+  display: inline-block;
+  border-radius: 20px;
+  background-color: white;
+  height: 335px;
+  position: relative;
+}
+.rank_video_samnaile{
+  width: 200px;
+  height: 130px;
+}
+.rank_main_column{
+  max-width: 800px;
+  width: 90%;
+  background-color: rgb(87, 87, 87);
+  float: left;
+}
+.rank_number{
+  font-weight: 900;
+  font-size: 2rem;
+  font-style:italic;
+  margin-top: 2px;
+}
+.rank_subscrivber{
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0px;
+}
+.rank_subscrivber_column{
+  background-color: rgb(39, 38, 38);
+  padding: 10px;
+  border-radius: 0px 0px 20px 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.rank_channel_name{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.rank_title{
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0px 0px 0px 10px;
+}
+.rank_genle_title_column{
+  margin: 0px 10px;
+
+}
+.rank_genle_column{
+  display: inline-block;
+
 }

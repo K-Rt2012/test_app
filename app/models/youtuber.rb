@@ -12,6 +12,13 @@ class Youtuber < ApplicationRecord
   def uniine(user)
     likes.find_by(user_id: user.id).destroy
   end
+  def self.genle_search(search)
+    youtuber = self.find_by(id: search)
+    return youtuber.genles
+  end
+  def self.category_id
+    self.all
+  end
 end
 
 def self.search(search) #self.でクラスメソッドとしている

@@ -70,4 +70,11 @@ source 'https://rubygems.org'
 gem 'poltergeist'
 
 gem 'rails4-autocomplete'
+
 gem 'kaminari'
+
+gem 'active_decorator'
+
+gem 'devise-i18n'
+
+gem 'devise-i18n-views'

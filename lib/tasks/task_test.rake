@@ -13,7 +13,7 @@ namespace :task_test do
     require 'active_support/core_ext/numeric/conversions'
 
     CSV.foreach(Rails.root.join('config','youtuber_list','youtuber_next_data.csv')).with_index(1) do |data,index|
-      next if index > 180
+      next if index > 1000
       unless Video.exists?(youtuber_id: index)
         p data[2]
         p data[0]
@@ -37,7 +37,7 @@ namespace :task_test do
             p "値が空です"
             video_id = "idが存在しません"
             video_title = "titleが存在しません"
-            category_id = "categoryが存在しません"
+            category_id = 29
             videos_data = [video_id, video_title, category_id, data[2]]
             CSV.open(Rails.root.join('config', 'youtuber_list', 'video_data.csv'), "a:UTF-8") do |csv|
               csv << videos_data

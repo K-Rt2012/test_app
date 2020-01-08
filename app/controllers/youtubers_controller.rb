@@ -12,14 +12,19 @@ class YoutubersController < ApplicationController
     p @youtuber
     @video = Video.find_by(youtuber_id: @youtuber.id)
     p @video
-    @category = VideoCategory.find_by(category: @video.video_category_id)
-    #youtuberのいいね数をカウント
+    if @video
+      @category = VideoCategory.find_by(category: @video.video_category_id)
+    end
+      #youtuberのいいね数をカウント
     @good_count = Like.where(youtuber_id: @youtuber.id).count
+    @category_id = VideoCategory.all
   end
 
   def category
-    @category_id = VideoCategory.find_by(category: params[:category])
-    @category = Video.where(video_category_id: @category_id.category)
+    @page = params[:page]
+    @category = VideoCategory.find_by(category: params[:category])
+    @video = Video.where(video_category_id: @category.category).page(@page).per(20)
+    @category_id = VideoCategory.all
   end
 
   def category_search
@@ -29,6 +34,7 @@ class YoutubersController < ApplicationController
   def subscriber_ranking
     @page = params[:page]
     @rank = Rank.all.page(@page).per(20)
+    @category_id = VideoCategory.all
   end
   def genle
     @is_pagenate = false
@@ -48,12 +54,13 @@ class YoutubersController < ApplicationController
     @is_pagenate = false
     @page = params[:page]
     if params[:youtuber_name]
-      youtuber_name = params[:youtuber_name]
+      @youtuber_name = params[:youtuber_name]
       # where likeであいまい検索
-      @youtuber_search = Youtuber.where("name LIKE '%#{youtuber_name}%'").page(@page).per(20)
+      @youtuber_search = Youtuber.where("name LIKE '%#{@youtuber_name}%'").page(@page).per(20)
       @is_pagenate = true
     else
       @youtuber_search = Youtuber.first(20)
     end
+    @category_id = VideoCategory.all
   end
 end

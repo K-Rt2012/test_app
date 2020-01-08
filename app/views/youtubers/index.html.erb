@@ -18,7 +18,7 @@
           <% end %>
         </div>
         <div class="index_genle_search_column">
-          <h5 class="index_genle_">ジャンルから探す</h5>
+          <br><h5 class="index_genle_search_title">ジャンルから探す</h5>
           <% @genle_category.each do |genle_category| %>
             <div class="index_genle_group">
               <div class="index_genle_title">
@@ -41,7 +41,7 @@
     </section>
     <section class="side_column">
       <div class="category_search_column">
-        <h5 class="category_title">カテゴリーから探す</h5>
+        <h5 class="category_title">カテゴリーから動画を探す</h5>
         <%= form_tag ('/youtubers/category'), method: :get do %>
           <select name="category" >
             <optgroup label="カテゴリーリスト">
@@ -53,7 +53,7 @@
           <button type="submit" class="button1"><i class="fas fa-search"></i></button>
         <% end %>
       </div>
-      <div class="sice_navi_inner">
+      <br><div class="sice_navi_inner">
         <nav class="side_navi">
           <h5 class="side_navi_title">よく見られているページ</h5>
           <ul class="side_navi_list">

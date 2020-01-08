@@ -20,14 +20,18 @@
 									<%= link_to "#{genle.name}", youtubers_genle_path(genle_name: genle.name), class: "youtuber_genle genle_hover" %>
 								<% end %>
 							</div>
-							<div class="youtuber_video_container">
-								<% data.videos.each do |video| %>
-									<% if video %>
-										<%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
-                  <% else %>
-                    <%= image_tag 'movie.jpg', class: "youtuber_video_samnaile" %>
-									<% end %>
-								<% end %>
+              <div class="youtuber_video_container">
+                <% if data.videos.present? %>
+                  <% data.videos.each do |video| %>
+                    <% if video.id.nil? %>
+                      <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
+                    <% else %>
+                      <%= image_tag "https://img.youtube.com/vi/#{video.video_id}/sddefault.jpg", class: "youtuber_video_samnaile"%>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <%= image_tag "movie.jpg", class: "youtuber_video_samnaile" %>
+                <% end %>
 							</div>
 						</div>
           <% end %>
