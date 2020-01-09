@@ -1,7 +1,7 @@
 <div class="login_column">
   <div class="login">
     <div class="login-triangle"></div>
-    <h2 class="login-header">新規作成</h2>
+    <h2 class="login-header">アカウント登録</h2>
     <div class="login-container">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %> 
@@ -24,4 +24,7 @@
     </div>
   </div>
   <div class="sighn_in_column"><%= link_to "ログインはこちら", new_user_session_path, class: "sighn_in" %></div>
+  <div class="sighn_up_description">
+    <br><b>※アカウント登録をすることによりYoutuberプロフィール画面でグッドボタンを押せるようになります。
+  </div>
 </div>
