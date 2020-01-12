@@ -61,8 +61,9 @@ ul.topnav li.right {
   padding: 10px;
 }
 .site_text{
-  letter-spacing: 1px;
-  line-height: 30px;
+  line-height: 2;
+  letter-spacing: 0.1em;
+  font-weight: bold;
 }
 .inner{
   overflow: hidden;
@@ -99,7 +100,6 @@ footer{
 }
 .youtuber_infomation{
   margin-bottom: 10px;
-  
 }
 .youtuber_name{
   text-decoration: none;
@@ -365,7 +365,14 @@ footer{
   background-image: url("/images/夜の街並み.jpeg");
   background-size: 100%;
 }
-.page_description_title,.page_description{
+.page_description_title{
+  color: white;
+  font-weight: bold;
+}
+.page_description{
+  margin: 0px 50px;
+  padding: 30px 0px;
+  font-size: 1.2rem;
   color: white;
 }
 .page_description_column{
@@ -420,7 +427,7 @@ footer{
 
 /*ユーチューバーGROWTHとは？*/
 .home_header{
-  background-image: url("/images/home_header.jpg");
+  background-image: url("/images/夜の街並み.jpeg");
   background-size: cover;
   color: white;
 }
@@ -433,15 +440,38 @@ footer{
   background-color:white;
 }
 .home_sab_title{
-  background-color: #D9E5FF;
+  background-color: rgb(87, 87, 87);
+  color: white
 }
 .home_header_title{
-  margin: 0px 30px;
+  margin: 0px 40px;
+  padding: 30px 0px;
+  font-weight: bold;
 }
 .home_header_text{
-  margin: 0px 20px;
-
-  padding: 20px 0px;
+  margin: 0px 50px;
+  padding: 30px 0px;
+  font-size: 1.2rem;
+}
+.home_description_1{
+  width: 65%;
+  margin: 70px 0px 50px 10%;
+}
+.youtube_fes_img{
+  width: 55%;
+  float: right;
+  margin-right: 10%;
+  margin: 20px　0px;
+}
+.youtube_logo_img{
+  width: 35%;
+  margin: auto;
+  display: block;
+}
+.home_youtube_fes{
+  overflow: hidden;
+}
+.home_youtube_logo{
 }
 /*ユーチューバー詳細ページ*/
 .good_color{
